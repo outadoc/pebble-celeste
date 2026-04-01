@@ -24,12 +24,6 @@
                     "targetPlatforms": null,
                     "type": "font",
                     "characterRegex": "[0-9:APM ]"
-                },
-                {
-                    "file": "fonts/renogare.otf",
-                    "name": "FONT_RENOGARE_24",
-                    "targetPlatforms": null,
-                    "type": "font"
                 }
             ]
         },
