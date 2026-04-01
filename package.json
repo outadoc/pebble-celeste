@@ -1,12 +1,12 @@
 {
-    "author": "MakeAwesomeHappen",
+    "author": "outadoc",
     "dependencies": {},
     "keywords": [
         "pebble-app"
     ],
-    "name": "watchface-tutorial",
+    "name": "celeste",
     "pebble": {
-        "displayName": "Tutorial Watchface",
+        "displayName": "Celeste",
         "enableMultiJS": true,
         "messageKeys": [],
         "projectType": "native",
@@ -20,9 +20,10 @@
                 },
                 {
                     "file": "fonts/renogare.otf",
-                    "name": "FONT_RENOGARE_42",
+                    "name": "FONT_RENOGARE_44",
                     "targetPlatforms": null,
-                    "type": "font"
+                    "type": "font",
+                    "characterRegex": "[0-9:APM ]"
                 },
                 {
                     "file": "fonts/renogare.otf",

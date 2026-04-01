@@ -2,7 +2,6 @@
 
 static Window *s_main_window;
 static TextLayer *s_time_layer;
-static TextLayer *s_date_layer;
 static GBitmap *s_bmp_mount;
 static BitmapLayer *s_bmp_mount_layer;
 static GFont s_font_time;
@@ -20,13 +19,6 @@ static void update_time()
 
   // Display this time on the TextLayer
   text_layer_set_text(s_time_layer, s_time_buffer);
-
-  // Write the current date into a buffer
-  static char s_date_buffer[16];
-  strftime(s_date_buffer, sizeof(s_date_buffer), "%a %b %d", tick_time);
-
-  // Display the date
-  text_layer_set_text(s_date_layer, s_date_buffer);
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
@@ -40,24 +32,15 @@ static void main_window_load(Window *window)
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
-  s_font_time = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_RENOGARE_42));
+  s_font_time = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_RENOGARE_44));
   s_font_body = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_RENOGARE_24));
 
   // Create the time TextLayer
-  s_time_layer = text_layer_create(
-      GRect(0, PBL_IF_ROUND_ELSE(58, 52), bounds.size.w, 50));
+  s_time_layer = text_layer_create(GRect(0, 24, bounds.size.w, 50));
   text_layer_set_background_color(s_time_layer, GColorClear);
   text_layer_set_text_color(s_time_layer, GColorWhite);
   text_layer_set_font(s_time_layer, s_font_time);
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
-
-  // Create the date TextLayer
-  s_date_layer = text_layer_create(
-      GRect(0, PBL_IF_ROUND_ELSE(110, 104), bounds.size.w, 30));
-  text_layer_set_background_color(s_date_layer, GColorClear);
-  text_layer_set_text_color(s_date_layer, GColorWhite);
-  text_layer_set_font(s_date_layer, s_font_body);
-  text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
 
   // Create the mountain bmp
   s_bmp_mount = gbitmap_create_with_resource(RESOURCE_ID_IMG_MOUNT);
@@ -68,13 +51,11 @@ static void main_window_load(Window *window)
   // Add layers to the Window
   layer_add_child(window_layer, bitmap_layer_get_layer(s_bmp_mount_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
-  layer_add_child(window_layer, text_layer_get_layer(s_date_layer));
 }
 
 static void main_window_unload(Window *window)
 {
   text_layer_destroy(s_time_layer);
-  text_layer_destroy(s_date_layer);
   gbitmap_destroy(s_bmp_mount);
   bitmap_layer_destroy(s_bmp_mount_layer);
   fonts_unload_custom_font(s_font_time);
